@@ -1,0 +1,116 @@
+1.
+#include <stdio.h>
+
+int inf = 9999;
+int k, a, b, u, v, ne=1, min_val;
+int mincost = 0;
+
+char area[][6] = {"A","B","C","D","E","F"}; 
+int visited[6] = {0};
+
+void prim_MST(int cost[][6], int n)
+{
+    int i,j;
+    
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			if(cost[i][j]==0)
+            {
+			    cost[i][j]=inf;
+            }
+		}
+	}
+    
+	visited[0]=1;
+    mincost=0;
+
+	for(ne=1;ne<n;ne++) 
+	{
+        min_val=inf;
+		for(i=0;i<n;i++)
+        {
+            for(j=0;j<n;j++)
+            {
+                if(visited[i]!=0 && visited[j]==0)
+                {
+                    if(cost[i][j] < min_val)                                                              
+                    {
+                        min_val=cost[i][j];
+                        u=i; 
+                        v=j;
+                    }
+                }
+            }
+        }
+
+		printf("\n Edge %d : %s - %s cost : %d",ne,area[u],area[v],min_val);
+
+ 		mincost=mincost+min_val;
+ 		visited[v]=1;
+		cost[u][v] = cost[v][u] = inf;
+	}
+
+	printf("\n Minimun cost accordingly Prim's Algorithm = %d",mincost);
+}
+
+int main()
+{
+    int i,j,n=6;
+    
+    int cost[6][6] = {  {0,3,4,0,0,0}, 
+                        {3,0,2,4,2,0}, 
+                        {4,2,0,0,5,0}, 
+                        {0,4,0,0,3,2}, 
+                        {0,2,5,3,0,3}, 
+                        {0,0,0,2,3,0}   };  
+
+    prim_MST(cost, n);
+
+    return 0;
+}
+2.
+#include <stdio.h>
+#include <string.h>
+
+int lcsLength(char *X, char *Y) 
+{
+    int i,j;
+    int m = strlen(X);
+    int n = strlen(Y);
+    int dp[m+1][n+1];
+
+    for (i = 0; i <= m; i++) 
+    {
+        for (j = 0; j <= n; j++) 
+        {
+            if (i == 0 || j == 0)
+                dp[i][j] = 0;
+            else if (X[i-1] == Y[j-1])
+                dp[i][j] = dp[i-1][j-1] + 1;
+            else
+                dp[i][j] = (dp[i-1][j] > dp[i][j-1]) ? dp[i-1][j] : dp[i][j-1];
+        }
+    }
+
+    return dp[m][n];
+}
+
+int main() 
+{
+    char str1[100], str2[100];
+    int length;
+
+    printf("\n Enter first string: ");
+    scanf("%s", str1);
+
+    printf("\n Enter second string: ");
+    scanf("%s", str2);
+
+    length = lcsLength(str1, str2);
+    
+    printf("\n Length of Longest Common Subsequence: %d", length);
+
+    return 0;
+}

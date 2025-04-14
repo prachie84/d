@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<conio.h>
+
+#define MAX 100
+
+struct emp
+{
+	int eid,age;
+	char ename[20];
+}e[10];
+
+void insertionsort(struct emp e[],int n)
+{
+	int i,temp,j=1,k;
+	struct emp t;
+
+	while(j<n)
+	{
+		i = j-1;
+		temp = e[j].age;
+		t = e[j];
+
+		while(e[i].age > temp && i!=-1)
+		{
+			e[i+1] =  e[i];
+			i--;
+		}
+		e[i+1] = t;
+		j++;
+
+		//display(arr,n);
+	}
+
+	for(k=0;k<n;k++)
+	{
+		printf("\n %d %s %d",e[k].eid,e[k].ename,e[k].age);
+	}
+}
+
+void main()
+{
+	FILE *fp;
+	int i=0;
+
+	clrscr();
+
+	fp = fopen("emp.txt","r");
+
+	while((fscanf(fp,"%d%s%d",&e[i].eid,e[i].ename,&e[i].age))!=EOF)
+	{
+		printf("\n %d %s %d",e[i].eid,e[i].ename,e[i].age);
+		i++;
+	}
+
+	printf("\n\n Sorted Data \n");
+
+	insertionsort(e,i);
+
+	getch();
+}
+2.

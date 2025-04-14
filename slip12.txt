@@ -1,0 +1,74 @@
+1.
+2.
+#include<stdio.h>
+
+void generate(int arr[],int n)
+{
+     int i;
+     
+     srand(time(0));
+     
+     for(i=0;i<n;i++)
+     {
+           arr[i] = rand()%100;
+     }
+}
+
+void display(int arr[],int n)
+{
+     int i;
+     
+     for(i=0;i<n;i++)
+     {
+           printf(" %d ",arr[i]);
+     }
+}
+
+void selection_sort(int arr[],int n)
+{
+     int i,j,minval,minpos,temp;
+     
+     for(i=0;i<n-1;i++)
+     {
+           minval = arr[i];
+           minpos = i;
+           
+           for(j=i+1;j<n;j++)
+           {
+                 if(arr[j]<minval)
+                 {
+                       minval = arr[j];
+                       minpos = j;
+                 }
+           }
+           
+           temp = arr[i];
+           arr[i] = arr[minpos];
+           arr[minpos] = temp;
+           
+           printf("\n\n After %d pass : ",i);
+           display(arr,n);
+     }
+}
+
+int main()
+{
+    int arr[100],n;
+    
+    printf("\n Enter Array Size : ");
+    scanf("%d",&n);
+    
+    generate(arr,n);
+    
+    printf("\n\n Before Sorting : ");
+    display(arr,n);
+    
+    selection_sort(arr,n);
+    
+    printf("\n\n After Sorting : ");
+    display(arr,n);
+    
+    getch();
+    
+    return 0;
+}

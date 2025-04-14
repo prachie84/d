@@ -1,0 +1,213 @@
+1.
+#include<stdio.h>
+#include<stdlib.h>
+ 
+int board[20],count;
+ 
+void queen(int row,int n);
+
+int main()
+{
+    int n,i,j;  
+ 
+    printf(" - N Queens Problem Using Backtracking -");
+    printf("\n\nEnter number of Queens:");
+    scanf("%d",&n);
+
+    queen(1,n);
+
+    return 0;
+}
+ 
+//function for printing the solution
+void print(int n)
+{
+    int i,j;
+    printf("\n\nSolution %d:\n\n",++count);
+    
+    for(i=1;i<=n;++i)
+    {
+        printf("\t%d",i);
+    }
+
+    for(i=1;i<=n;i++)
+    {
+        printf("\n\n%d",i);
+        for(j=1;j<=n;j++) 
+        {
+            if(board[i]==j)
+            {
+                printf("\t Q"); 
+            }
+            else
+            {
+                printf("\t -"); 
+            }
+        }
+    }
+}
+ 
+int place(int row,int column)
+{
+    int i;
+    for(i=1;i<=row-1;i++)
+    {
+        if(board[i]==column)
+            return 0;
+        else if(abs(board[i]-column)==abs(i-row))
+            return 0;
+    }
+    
+    return 1;
+}
+ 
+//function to check for proper positioning of queen
+void queen(int row,int n)
+{
+    int column;
+    for(column=1;column<=n;column++)
+    {
+        if(place(row,column))
+        {
+            board[row]=column; 
+            
+            if(row==n) 
+                print(n); 
+            else 
+                queen(row+1,n);
+        }
+    }
+}
+2.
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+typedef struct 
+{
+    int weight;
+    int value;
+    float ratio;
+} Item;
+
+typedef struct 
+{
+    int level;
+    int profit;
+    int weight;
+    float bound;
+} Node;
+
+void sortItems(Item items[], int n) 
+{
+    int i,j;
+    Item temp;
+    double r1,r2;
+
+    for (i=1; i<n; i++) 
+    {
+        for (j=0; j<n-i; j++) 
+        {
+            if (items[j].ratio<items[j+1].ratio) 
+            {
+                temp = items[j];
+                items[j] = items[j+1];
+                items[j+1] = temp;
+            }
+        }
+    }
+}
+
+float bound(Node u, int n, int W, Item items[]) 
+{
+    float profit_bound = u.profit;
+    int j = u.level + 1;
+    int totweight = u.weight;
+
+    if (u.weight >= W)
+        return 0;
+
+    while ((j < n) && (totweight + items[j].weight <= W)) 
+    {
+        totweight += items[j].weight;
+        profit_bound += items[j].value;
+        j++;
+    }
+
+    if (j < n)
+        profit_bound += (W - totweight) * items[j].ratio;
+
+    return profit_bound;
+}
+
+int knapsack(int W, Item items[], int n) 
+{
+    Node u, v;
+    int maxProfit = 0;
+    Node queue[MAX];
+    int front = 0, rear = 0;
+
+    sortItems(items, n);
+
+    v.level = -1;
+    v.profit = v.weight = 0;
+    v.bound = bound(v, n, W, items);
+    queue[rear++] = v;
+
+    while (front < rear) 
+    {
+        v = queue[front++];
+        
+        if (v.bound > maxProfit) 
+        {
+            u.level = v.level + 1;
+            u.weight = v.weight + items[u.level].weight;
+            u.profit = v.profit + items[u.level].value;
+
+            if (u.weight <= W && u.profit > maxProfit)
+                maxProfit = u.profit;
+
+            u.bound = bound(u, n, W, items);
+            if (u.bound > maxProfit)
+                queue[rear++] = u;
+
+            u.weight = v.weight;
+            u.profit = v.profit;
+            u.bound = bound(u, n, W, items);
+
+            if (u.bound > maxProfit)
+                queue[rear++] = u;
+        }
+    }
+
+    return maxProfit;
+}
+
+int main() 
+{
+    int i,n,wt,maxProfit;
+    Item items[100];
+
+    printf("\n Enter Knapsack Size : ");
+	scanf("%d",&wt);
+
+	printf("\n Enter No. of Items : ");
+	scanf("%d",&n);
+
+	printf("\n Enter %d Item Details : ",n);
+	for(i=0;i<n;i++)
+	{
+		printf("\n Enter Value & Weight : ");
+		scanf("%d%d",&items[i].value,&items[i].weight);
+	}
+    
+    for (i = 0; i < n; i++)
+        items[i].ratio = (float)items[i].value / items[i].weight;
+
+    maxProfit = knapsack(wt, items, n);
+
+    printf("\n Maximum profit = %d", maxProfit);
+
+    return 0;
+}
