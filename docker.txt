@@ -1,0 +1,51 @@
+1.folder:my-web-server
+2.touch index.html
+3.touch Dockerfile
+4.In html folder=><!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Webpage</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .box {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 8px #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Welcome to My Website</h1>
+
+    <div class="box">
+        <p>This is a simple HTML and CSS example.</p>
+    </div>
+
+</body>
+</html>
+
+5.in dockerfolder=>FROM httpd:2.4
+   COPY index.html  /usr/local/apache2/htdocs/
+6.In terminal=>sudo docker build -t my-web-server
+7.sudo docker run -p 8081:80 -d my-web-server
+8.open brower=>http//localhost:8092

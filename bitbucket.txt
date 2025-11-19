@@ -1,0 +1,23 @@
+setting=>personal bit bucket setting=>app password=>go to api token=>go to scope=>
+create token=>copy "link"=>notepad
+move back=>your work=>project=>clone=copy"link"
+
+1.paste clone "link"=>git clone
+2.cd prachi
+3.touch index.html
+4.git status
+5.git add.
+6.git status
+7.git commit -m "msg"
+8.git push origin main
+9."link"
+10.git status
+11.git branch new
+12.git checkout new
+13.touch second.html
+14.git status
+15.git add.
+16.git commit -m "msg1"
+17.git push origin new
+18.git branch main
+19.git pull origin main  

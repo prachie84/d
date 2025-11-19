@@ -1,0 +1,17 @@
+git --version
+git cofig --global user.name "prachi"
+git config --global user.email "bhuseprachi84@gmail.com "
+git config--list
+1.git init
+2. touch s1.html
+3.git status
+4.git add s1.html=>write html code
+5.git status
+6.git commit -m "first change"
+7.git log 
+8.git commit -m "second change"
+9.git diff
+10.git branch childbranch
+11.git checkout childbranch
+.....do changes in the file 
+12.   

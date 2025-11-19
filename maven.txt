@@ -1,0 +1,11 @@
+1.mvn --version
+2.mvn archetype:generate -DgroupId= com.example -DartifactId = MyApp -DinteractiveMode = false
+3.cd MyApp
+4.tree
+5.mvn compile
+6.
+
+
+7.mvn exec:java
+8.code changes
+9.mvn package
