@@ -1,0 +1,44 @@
+1.  ngrok http 8080
+- click on teh forwarding link to open jenkins in browser, then "Visit Site"
+- 
+
+### CI
+
+2.  click on "New item"
+- enter name "myfirstjob"
+- select "Freestyle project"
+- click "OK"
+
+- then in "Genreal" click in "socurecode management" select "git"
+- enter repo link "
+- Branche specifier: main or master
+- Build Tigger
+
+- Gitube hook trigger for git scame polling
+- Apply then Save
+
+- Go to Gitub repo -> "Settings" -> "Webhooks" -> "Add webhook"
+- Payload URL: paste the ngrok forwarding link + "/github-webhook/"
+- Content type: application/json
+- click "Add webhook"
+
+
+### CD
+
+- other location -> ubuntu -> var -> www -> html 
+- sudo mkdir new
+- sudo chown -R jenkins:jenkins /var/www/html/new/
+
+- congigure jenkins job
+- add build step -> select "Execute shell"
+- cp -r * /var/www/html/new/
+
+- build now
+
+- go to http://0.0.0.0/new/index.html to see the changes
+
+
+sudo nautilus
+- open file manager with root privileges
+
+https://ruthann-briefless-nonscholastically.ngrok-free.dev
